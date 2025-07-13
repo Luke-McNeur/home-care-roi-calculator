@@ -54,7 +54,7 @@ Based on documented industry research:
 - **Competitive differentiation** through data-driven approach
 
 ## Files Structure
-├── index.html          # Complete calculator application
+├── home-care-roi-calculator.html        # Complete calculator application
 ├── workflows/          # n8n automation workflows
 │   └── webhook-flow.json
 ├── assets/            # Screenshots and documentation
