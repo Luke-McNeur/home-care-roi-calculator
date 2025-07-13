@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Care ROI Calculator | Neurvana AI</title>
+    <meta name="description" content="Calculate your agency's hidden costs from manual processes. Discover exact monthly losses and ROI potential from AI automation.">
+    <style>
+        .neurvana-roi-wrapper * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .neurvana-roi-wrapper {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .neurvana-calc-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .neurvana-calc-header {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .neurvana-calc-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .neurvana-calc-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .neurvana-form-section {
+            padding: 40px 30px;
+        }
+        
+        .neurvana-form-group {
+            margin-bottom: 25px;
+        }
+        
+        .neurvana-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1rem;
+        }
+        
+        .neurvana-form-group input, .neurvana-form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .neurvana-form-group input:focus, .neurvana-form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .neurvana-calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-top: 10px;
+        }
+        
+        .neurvana-calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .neurvana-calculate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .neurvana-results {
+            background: #f8f9fa;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #28a745;
+            display: none;
+        }
+        
+        .neurvana-results h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        
+        .neurvana-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .neurvana-metric:last-child {
+            border-bottom: none;
+        }
+        
+        .neurvana-metric-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .neurvana-metric-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #28a745;
+        }
+        
+        .neurvana-metric-value.neurvana-cost {
+            color: #dc3545;
+        }
+        
+        .neurvana-cta-section {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .neurvana-cta-section h4 {
+          	color: white;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .neurvana-cta-section p {
+          	color: white;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .neurvana-cta-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        
+        .neurvana-cta-btn:hover {
+            background: #218838;
+        }
+        
+        .neurvana-highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+          	color: #2c3e50 !important;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .neurvana-explanation-section {
+            background: #f8f9fa;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .neurvana-explanation-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .neurvana-cost-breakdown {
+            margin: 20px 0;
+        }
+
+        .neurvana-cost-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .neurvana-cost-item h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .neurvana-how-ai-helps {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .neurvana-how-ai-helps h4 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+        }
+
+        .neurvana-how-ai-helps ul {
+            margin-left: 20px;
+        }
+
+        .neurvana-how-ai-helps li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .neurvana-savings-explanation {
+            background: #e8f5e8;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+        }
+
+        .neurvana-savings-explanation h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .neurvana-savings-explanation p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .neurvana-roi-promise {
+            font-weight: bold;
+            color: #28a745 !important;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .neurvana-calc-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .neurvana-calc-header p {
+                font-size: 1rem;
+            }
+            
+            .neurvana-form-section {
+                padding: 30px 20px;
+            }
+            
+            .neurvana-explanation-section {
+                padding: 20px;
+            }
+            
+            .neurvana-cost-item {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="neurvana-roi-wrapper">
+        <div class="neurvana-calc-container">
+            <div class="neurvana-calc-header">
+                <h1>Calculate Your Agency's Hidden Costs</h1>
+                <p>Enter your agency details to see exact monthly losses from manual scheduling and caregiver no-shows. Get your savings projection immediately.</p>
+            </div>
+            
+            <div class="neurvana-form-section">
+                <div class="neurvana-explanation-section">
+                    <h3 onclick="toggleExplanation()" style="cursor: pointer;">
+                        How This Calculator Works <span id="toggleIcon">▼</span>
+                    </h3>
+                    <div id="explanationContent">
+                        <p>This calculator reveals your hidden operational costs in four key areas where AI automation delivers immediate savings:</p>
+                        
+                        <div class="neurvana-cost-breakdown">
+                            <div class="neurvana-cost-item">
+                                <h4>📅 Administrative Labor Costs</h4>
+                                <p>Hours spent on manual scheduling, coordination, and communication tasks. <strong>AI automates 75% of this work.</strong></p>
+                            </div>
+                            
+                            <div class="neurvana-cost-item">
+                                <h4>⚡ Scheduling Inefficiencies</h4>
+                                <p>Double bookings, conflicts, last-minute changes, and coordination overhead beyond basic scheduling. <strong>AI eliminates most scheduling errors.</strong></p>
+                            </div>
+                            
+                            <div class="neurvana-cost-item">
+                                <h4>🔄 Caregiver Turnover Impact</h4>
+                                <p>Hidden costs from the 79.2% annual turnover rate including recruiting, training, and knowledge loss. <strong>AI improves retention through better communication.</strong></p>
+                            </div>
+                            
+                            <div class="neurvana-cost-item">
+                                <h4>📞 Communication Gaps</h4>
+                                <p>Family update calls, status inquiries, caregiver coordination, and information gaps. <strong>AI provides proactive, automated updates.</strong></p>
+                            </div>
+                        </div>
+                        
+                        <div class="neurvana-how-ai-helps">
+                            <h4>How Neurvana AI Delivers These Savings:</h4>
+                            <ul>
+                                <li><strong>Smart Scheduling:</strong> AI automatically assigns shifts, detects conflicts, and manages backup requests</li>
+                                <li><strong>Family Updates:</strong> Automated visit summaries and proactive status messages</li>
+                                <li><strong>Caregiver Engagement:</strong> Better communication reduces frustration and turnover</li>
+                                <li><strong>Predictive Alerts:</strong> AI identifies potential issues before they become problems</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="neurvanRoiCalculator">
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaName">Your Name *</label>
+                        <input type="text" id="neurvanaName" name="name" required>
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaEmail">Email Address *</label>
+                        <input type="email" id="neurvanaEmail" name="email" required>
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaAgency">Agency Name *</label>
+                        <input type="text" id="neurvanaAgency" name="agency" required>
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaPhone">Phone Number (Optional)</label>
+                        <input type="tel" id="neurvanaPhone" name="phone">
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaCaregivers">Number of Active Caregivers *</label>
+                        <input type="number" id="neurvanaCaregivers" name="caregivers" min="1" max="500" required>
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaAdminWage">Average Admin Hourly Wage *</label>
+                        <select id="neurvanaAdminWage" name="adminWage" required>
+                            <option value="">Select wage range</option>
+                            <option value="15">$15/hour</option>
+                            <option value="18">$18/hour</option>
+                            <option value="20">$20/hour</option>
+                            <option value="22">$22/hour</option>
+                            <option value="25">$25/hour</option>
+                            <option value="28">$28/hour</option>
+                            <option value="30">$30+/hour</option>
+                        </select>
+                    </div>
+                    
+                    <div class="neurvana-form-group">
+                        <label for="neurvanaManualHours">Hours Per Week Spent on Manual Administrative Tasks *</label>
+                        <select id="neurvanaManualHours" name="manualHours" required>
+                            <option value="">Select hours</option>
+                            <option value="10">10 hours/week</option>
+                            <option value="15">15 hours/week</option>
+                            <option value="20">20 hours/week</option>
+                            <option value="25">25 hours/week</option>
+                            <option value="30">30 hours/week</option>
+                            <option value="35">35+ hours/week</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="neurvana-calculate-btn" id="neurvanaCalculateBtn">
+                        Calculate My Hidden Costs
+                    </button>
+                </form>
+                
+                <div id="neurvanaResults" class="neurvana-results">
+                    <h3>Your Hidden Cost Analysis</h3>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Administrative Labor Costs:</span>
+                        <span class="neurvana-metric-value neurvana-cost" id="neurvanaAdminCost">$0</span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Scheduling Inefficiency Costs:</span>
+                        <span class="neurvana-metric-value neurvana-cost" id="neurvanaSchedulingCost">$0</span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Monthly Turnover Impact:</span>
+                        <span class="neurvana-metric-value neurvana-cost" id="neurvanaTurnoverCost">$0</span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Communication Gap Costs:</span>
+                        <span class="neurvana-metric-value neurvana-cost" id="neurvanaCommunicationCost">$0</span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label"><strong>Total Monthly Hidden Costs:</strong></span>
+                        <span class="neurvana-metric-value neurvana-cost" id="neurvanaTotalWaste" style="font-size: 1.4rem;"><strong>$0</strong></span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label"><strong>Projected Monthly Savings with AI:</strong></span>
+                        <span class="neurvana-metric-value" id="neurvanaProjectedSavings" style="font-size: 1.4rem;"><strong>$0</strong></span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Annual ROI Potential:</span>
+                        <span class="neurvana-metric-value" id="neurvanaAnnualROI">$0</span>
+                    </div>
+                    <div class="neurvana-metric">
+                        <span class="neurvana-metric-label">Hours Reclaimed Per Week:</span>
+                        <span class="neurvana-metric-value" id="neurvanaHoursSaved">0</span>
+                    </div>
+                    
+                    <div class="neurvana-savings-explanation">
+                        <h4>💡 How You Achieve These Savings</h4>
+                        <p><strong>Month 1-2:</strong> AI takes over routine communications and basic scheduling coordination</p>
+                        <p><strong>Month 2-3:</strong> Smart automation reduces administrative overhead by 15+ hours weekly</p>
+                        <p><strong>Month 3-6:</strong> Improved caregiver communication reduces turnover and associated costs</p>
+                        <p class="neurvana-roi-promise"><strong>Result:</strong> Your agency operates with enterprise-level efficiency while maintaining personal care quality.</p>
+                    </div>
+                </div>
+                
+                <div id="neurvanaCtaSection" class="neurvana-cta-section" style="display: none;">
+                    <h4>Ready to <span class="neurvana-highlight">Eliminate These Hidden Costs</span>?</h4>
+                    <p>See exactly how Neurvana AI can transform your operations in just 90 days with guaranteed ROI.</p>
+                    <a href="#" class="neurvana-cta-btn" id="neurvanaScheduleCall">Schedule Free 15-Minute Strategy Call</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('neurvanRoiCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Disable button during calculation
+            const btn = document.getElementById('neurvanaCalculateBtn');
+            btn.disabled = true;
+            btn.textContent = 'Calculating...';
+            
+            // Calculate ROI with updated methodology
+            const caregivers = parseInt(data.caregivers);
+            const adminWage = parseInt(data.adminWage);
+            const manualHours = parseInt(data.manualHours);
+            
+            // Updated calculations based on industry research
+            const weeksPerMonth = 4.3;
+            
+            // Administrative Labor (existing calculation)
+            const adminCost = Math.round(manualHours * adminWage * weeksPerMonth);
+            
+            // Scheduling Inefficiencies (NEW - based on agency size)
+            let schedulingWastePerCaregiver;
+            if (caregivers <= 25) {
+                schedulingWastePerCaregiver = 36;
+            } else if (caregivers <= 100) {
+                schedulingWastePerCaregiver = 64;
+            } else {
+                schedulingWastePerCaregiver = 156;
+            }
+            const schedulingCost = Math.round(caregivers * schedulingWastePerCaregiver);
+            
+            // Caregiver Turnover Impact (NEW)
+            const turnoverRate = 0.792; // 79.2% annual turnover from research
+            const avgReplacementCost = 3500; // Conservative estimate per replacement
+            const monthlyTurnoverCost = Math.round((caregivers * turnoverRate * avgReplacementCost) / 12);
+            
+            // Communication Gaps (ENHANCED - based on agency size)
+            let communicationWastePerCaregiver;
+            if (caregivers <= 25) {
+                communicationWastePerCaregiver = 18;
+            } else if (caregivers <= 100) {
+                communicationWastePerCaregiver = 38;
+            } else {
+                communicationWastePerCaregiver = 84;
+            }
+            const communicationCost = Math.round(caregivers * communicationWastePerCaregiver);
+            
+            // Total calculations
+            const totalWaste = adminCost + schedulingCost + monthlyTurnoverCost + communicationCost;
+            const automationEfficiency = 0.75; // 75% efficiency gain
+            const projectedSavings = Math.round(totalWaste * automationEfficiency);
+            const annualROI = projectedSavings * 12;
+            const hoursSaved = Math.round(manualHours * automationEfficiency);
+            
+            // Display results
+            document.getElementById('neurvanaAdminCost').textContent = `$${adminCost.toLocaleString()}`;
+            document.getElementById('neurvanaSchedulingCost').textContent = `$${schedulingCost.toLocaleString()}`;
+            document.getElementById('neurvanaTurnoverCost').textContent = `$${monthlyTurnoverCost.toLocaleString()}`;
+            document.getElementById('neurvanaCommunicationCost').textContent = `$${communicationCost.toLocaleString()}`;
+            document.getElementById('neurvanaTotalWaste').textContent = `$${totalWaste.toLocaleString()}`;
+            document.getElementById('neurvanaProjectedSavings').textContent = `$${projectedSavings.toLocaleString()}`;
+            document.getElementById('neurvanaAnnualROI').textContent = `$${annualROI.toLocaleString()}`;
+            document.getElementById('neurvanaHoursSaved').textContent = `${hoursSaved} hours`;
+            
+            // Show results
+            document.getElementById('neurvanaResults').style.display = 'block';
+            document.getElementById('neurvanaCtaSection').style.display = 'block';
+            
+            // Send data to webhook
+            const webhookData = {
+                ...data,
+                calculations: {
+                    adminCost,
+                    schedulingCost,
+                    monthlyTurnoverCost,
+                    communicationCost,
+                    totalWaste,
+                    projectedSavings,
+                    annualROI,
+                    hoursSaved
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            fetch('https://neurvana.app.n8n.cloud/webhook/f273fbd7-a053-4506-8303-c2e1f85c7ef3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(webhookData)
+            }).catch(error => {
+                console.log('Webhook error:', error);
+            });
+            
+            // Re-enable button
+            btn.disabled = false;
+            btn.textContent = 'Calculate My Hidden Costs';
+            
+            // Scroll to results
+            document.getElementById('neurvanaResults').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+        
+        // Add click handler for CTA button
+        document.getElementById('neurvanaScheduleCall').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('https://calendly.com/neurvana-ai/15-min', '_blank');
+        });
+        
+        // Toggle explanation section
+        function toggleExplanation() {
+            const content = document.getElementById('explanationContent');
+            const icon = document.getElementById('toggleIcon');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                icon.textContent = '▶';
+            }
+        }
+        
+        // Start with explanation collapsed
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('explanationContent').style.display = 'none';
+            document.getElementById('toggleIcon').textContent = '▶';
+        });
+    </script>
+</body>
+</html>
