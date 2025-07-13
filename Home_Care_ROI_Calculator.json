@@ -1,0 +1,481 @@
+{
+  "name": "[Prod] Home Care ROI Calculator",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "f273fbd7-a053-4506-8303-c2e1f85c7ef3",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "34f74008-fb17-4703-960b-60ac4ca2e9bc",
+      "name": "Webhook",
+      "webhookId": "f273fbd7-a053-4506-8303-c2e1f85c7ef3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b6a07ea4-948c-403f-a565-b5910bc7998e",
+              "name": "timestamp",
+              "value": "={{ $json.body.timestamp }}",
+              "type": "string"
+            },
+            {
+              "id": "8284283e-9922-4b50-8c7f-26b5eb1ec1f4",
+              "name": "name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "54583cc3-eb84-4297-a2c8-a56ee713a028",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "80d5e429-496e-494c-ba3c-1a9177dbd1cf",
+              "name": "agency",
+              "value": "={{ $json.body.agency }}",
+              "type": "string"
+            },
+            {
+              "id": "a5ec4435-69af-45ec-87c9-32e86a7fd276",
+              "name": "phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "9838a974-560c-4a42-95e3-d608153cc706",
+              "name": "caregivers",
+              "value": "={{ $json.body.caregivers }}",
+              "type": "string"
+            },
+            {
+              "id": "3329746b-4988-41b5-be1e-dba050c90abe",
+              "name": "adminWage",
+              "value": "={{ $json.body.adminWage }}",
+              "type": "string"
+            },
+            {
+              "id": "0ee69a52-a643-418e-8d94-e31b6cc70b62",
+              "name": "manualHours",
+              "value": "={{ $json.body.manualHours }}",
+              "type": "string"
+            },
+            {
+              "id": "f897c91a-377a-488e-ba05-30289ceb7f38",
+              "name": "noshowRate",
+              "value": "={{ $json.body.noshowRate }}",
+              "type": "string"
+            },
+            {
+              "id": "a7a6d1d2-2693-4817-8d6c-a75063b34142",
+              "name": "monthlyCost",
+              "value": "={{ $json.body.calculations.monthlyCost }}",
+              "type": "number"
+            },
+            {
+              "id": "a5af1d01-0d8c-4b92-bab1-130aaf0764bd",
+              "name": "noshowCost",
+              "value": "={{ $json.body.calculations.noshowCost }}",
+              "type": "number"
+            },
+            {
+              "id": "48e94d4a-f575-4067-b4f9-a897c43b3e31",
+              "name": "totalWaste",
+              "value": "={{ $json.body.calculations.totalWaste }}",
+              "type": "number"
+            },
+            {
+              "id": "d70a95a0-bc28-40e0-9ff1-9253cb374051",
+              "name": "totalWaste",
+              "value": "={{ $json.body.calculations.totalWaste }}",
+              "type": "number"
+            },
+            {
+              "id": "b9d5f8a3-8157-4c9f-8e57-10256a964a38",
+              "name": "projectedSavings",
+              "value": "={{ $json.body.calculations.projectedSavings }}",
+              "type": "number"
+            },
+            {
+              "id": "175e24ac-bc54-4bba-a10c-0ed20634e3d9",
+              "name": "annualROI",
+              "value": "={{ $json.body.calculations.annualROI }}",
+              "type": "number"
+            },
+            {
+              "id": "ccc204c0-1a89-4e38-b836-32368e6c6731",
+              "name": "hoursSaved",
+              "value": "={{ $json.body.calculations.hoursSaved }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "a2a2730c-28db-4feb-ab9e-5c2f4d6e49b4",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1kKxvmZe9J40efVSInXnmAyZR_9lE4PSb9eRQRWx01oM",
+          "mode": "list",
+          "cachedResultName": "[Prod] Home Care ROI Calculator",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kKxvmZe9J40efVSInXnmAyZR_9lE4PSb9eRQRWx01oM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "lead capture",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1kKxvmZe9J40efVSInXnmAyZR_9lE4PSb9eRQRWx01oM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ $json.timestamp }}",
+            "name": "={{ $json.name }}",
+            "email": "={{ $json.email }}",
+            "agency": "={{ $json.agency }}",
+            "phone": "={{ $json.phone }}",
+            "caregivers": "={{ $json.caregivers }}",
+            "adminWage": "={{ $json.adminWage }}",
+            "manualHours": "={{ $json.manualHours }}",
+            "noshowRate": "={{ $json.noshowRate }}",
+            "monthlyCost": "={{ $json.monthlyCost }}",
+            "totalWaste": "={{ $json.totalWaste }}",
+            "noshowCost": "={{ $json.noshowCost }}",
+            "projectedSavings": "={{ $json.projectedSavings }}",
+            "hoursSaved": "={{ $json.hoursSaved }}",
+            "annualROI": "={{ $json.annualROI }}",
+            "friendlyTimestamp": "={{ $json.friendlyTimestamp }}"
+          },
+          "matchingColumns": [
+            "timestamp"
+          ],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "friendlyTimestamp",
+              "displayName": "friendlyTimestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "agency",
+              "displayName": "agency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "caregivers",
+              "displayName": "caregivers",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "adminWage",
+              "displayName": "adminWage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "manualHours",
+              "displayName": "manualHours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "noshowRate",
+              "displayName": "noshowRate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "monthlyCost",
+              "displayName": "monthlyCost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "noshowCost",
+              "displayName": "noshowCost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "totalWaste",
+              "displayName": "totalWaste",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "projectedSavings",
+              "displayName": "projectedSavings",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "annualROI",
+              "displayName": "annualROI",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "hoursSaved",
+              "displayName": "hoursSaved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        660,
+        0
+      ],
+      "id": "86d5f31c-77c5-4f31-9d7e-0dfdc47ad079",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "xtWqMdQAjMe6aAwL",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C091TUUUH70",
+          "mode": "list",
+          "cachedResultName": "workflow-alerts"
+        },
+        "text": "=🏥 New Home Care Lead - ROI Calculator\n\nAgency: {{ $json.agency }}\nContact: {{ $json.name }} ({{ $json.email }})\nSize: {{ $json.caregivers }} caregivers\nProjected Savings: ${{ $json.projectedSavings }}/month (${{ $json.annualROI }}/year)\n\n💰 **Quick Stats:**\n- Monthly waste: ${{ $json.totalWaste }}\n- Hours saved: {{ $json.hoursSaved }}/week\n- Admin wage: ${{ $json.adminWage }}/hr\n\n📞 Next Steps: Schedule discovery call within 24 hours\n📊 Full Details: <https://docs.google.com/spreadsheets/d/1kKxvmZe9J40efVSInXnmAyZR_9lE4PSb9eRQRWx01oM/edit?usp=sharing|View in Google Sheet>\n\nSubmitted: {{ $json.friendlyTimestamp }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        880,
+        0
+      ],
+      "id": "d88af2dd-bde4-4ea8-b689-887479218d2d",
+      "name": "Slack",
+      "webhookId": "18c7a129-50c8-4456-9d81-bf8f06c54ac7",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "7uVh3PTmGmseGHJb",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Choose the style you like\nconst formatter = new Intl.DateTimeFormat('en-US', {\n  timeZone: 'America/New_York',\n  month: 'long',      // “June”\n  day: 'numeric',     // “18”\n  year: 'numeric',    // “2025”\n  hour: 'numeric',\n  minute: '2-digit',\n  hour12: false,       // “8:05 AM”; set false for 24-h\n});\n\n// Loop through all incoming items\nitems.forEach(item => {\n  const ts = item.json.timestamp;          // ISO string or ms epoch\n  const date = new Date(ts);               // If epoch, ensure Number(ts)\n  item.json.friendlyTimestamp = formatter.format(date);\n});\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "fdde34da-6043-455e-b68b-b2f21de7c74b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "from": "+18338636387",
+        "to": "+15166696115",
+        "message": "🏥 New Home Care Lead - ROI Calculator",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "665d9901-f748-4e60-aaf4-537ae57bfb99",
+      "name": "Twilio",
+      "credentials": {
+        "twilioApi": {
+          "id": "FIZDajeW8LtBu4Wz",
+          "name": "Twilio account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ca692a20-966e-495a-8a31-23a080f75d70",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "536da3f879a4021c2e665004b205ac3248650d186016a9e0b3d1c8661186ceb0"
+  },
+  "id": "TBeSm9jcLsry0039",
+  "tags": []
+}
