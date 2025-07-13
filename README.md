@@ -53,12 +53,6 @@ Based on documented industry research:
 - **Authority positioning** in home care automation space
 - **Competitive differentiation** through data-driven approach
 
-## Files Structure
-├── home-care-roi-calculator.html        # Complete calculator application
-├── Home_Care_ROI_Calculator.json         # n8n automation workflows
-├── assets/            # Screenshots and documentation
-└── docs/             # Implementation guides
-
 ## Technology Stack
 - **Frontend:** HTML5, CSS3, Vanilla JavaScript
 - **Automation:** n8n workflow platform
