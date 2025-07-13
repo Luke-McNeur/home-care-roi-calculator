@@ -55,8 +55,7 @@ Based on documented industry research:
 
 ## Files Structure
 ├── home-care-roi-calculator.html        # Complete calculator application
-├── workflows/          # n8n automation workflows
-│   └── webhook-flow.json
+├── Home_Care_ROI_Calculator.json         # n8n automation workflows
 ├── assets/            # Screenshots and documentation
 └── docs/             # Implementation guides
 
